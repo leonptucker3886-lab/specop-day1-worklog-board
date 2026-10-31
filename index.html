@@ -1,0 +1,8 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Spec Op Worklog Board</title>
+<style>body{font-family:system-ui,sans-serif;background:#FAFAF9;color:#18181B;max-width:720px;margin:40px auto;padding:0 16px}h1{color:#2A78D6}table{width:100%;border-collapse:collapse}td,th{border-bottom:1px solid #DEDDD8;padding:8px;text-align:left}input,button{padding:8px;margin:4px 0}</style></head>
+<body><h1>Spec Op Squad Worklog</h1><p>Daily target: 3 projects. Shipped today: <b id="c">0</b>/3</p>
+<form id="f"><input id="who" placeholder="Who" required> <input id="proj" placeholder="Project" required> <input id="link" placeholder="Repo / deploy link"> <button>Log</button></form>
+<table><thead><tr><th>Time</th><th>Who</th><th>Project</th><th>Link</th></tr></thead><tbody id="t"></tbody></table>
+<script>const k='specop-log',today=new Date().toDateString();let L=JSON.parse(localStorage.getItem(k)||'[]');
+function r(){const d=L.filter(e=>e.day===today);document.getElementById('c').textContent=d.length;document.getElementById('t').innerHTML=d.map(e=>`<tr><td>${e.time}</td><td>${e.who}</td><td>${e.proj}</td><td>${e.link?`<a href="${e.link}">link</a>`:''}</td></tr>`).join('')}
+document.getElementById('f').onsubmit=ev=>{ev.preventDefault();L.push({day:today,time:new Date().toLocaleTimeString(),who:who.value,proj:proj.value,link:link.value});localStorage.setItem(k,JSON.stringify(L));ev.target.reset();r()};r();</script></body></html>
